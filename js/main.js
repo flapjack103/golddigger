@@ -234,16 +234,28 @@ var utils = {
             if (expenses.hasOwnProperty(expenseId)) {
                 var expenseObj = expenses[expenseId];
                 var tagName = expenseObj.tag;
+
                 if (!dataByTag.hasOwnProperty(tagName)) {
                     dataByTag[tagName] = {}
                     dataByTag[tagName].purchases = [];
 
                 }
-                var purchase = [];
+                
                 var day = this.getDayByEpoch(expenseObj["purchase_date"]);
-                purchase.push(day);
-                purchase.push(expenseObj.amount / 100);
-                dataByTag[tagName].purchases.push(purchase);
+                var noPurchaseThisDay = true;
+                for(var i = 0; i < dataByTag[tagName].purchases.length; i++) {
+                    if (dataByTag[tagName].purchases[i][0] == day) {
+                        dataByTag[tagName].purchases[i][1] += expenseObj.amount / 100;
+                        noPurchaseThisDay = false;
+
+                    }
+                }
+                if (noPurchaseThisDay) {
+                    var purchase = [];
+                    purchase.push(day);
+                    purchase.push(expenseObj.amount / 100);
+                    dataByTag[tagName].purchases.push(purchase);
+                }
             }
         }
 
