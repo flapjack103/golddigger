@@ -5,6 +5,8 @@ var config = {
 var app = {
     currentMonth: 0,
 
+    currentTotal: 0,
+
     initialize: function() {
         firebase.initialize(config.firebaseURL);
         handlers.initialize();
@@ -19,14 +21,19 @@ var app = {
     },
 
     setDataByMonth: function(month) {
+        var that = this;
         firebase.getTags(function(tags) {
             firebase.getExpensesByMonth(month, function(expenses) {
                 // If there are no expenses return;
                 if (!expenses)
                     expenses = {};
 
+                // What's our total
+                that.currentTotal = utils.calculateTotal(expenses);
+                ui.setTotal();
+
                 // Draw the pie chart
-                tagData = utils.formatFBDataByTag(expenses);
+                var tagData = utils.formatFBDataByTag(expenses);
                 if (pieChart.initialized) {
                     pieChart.set(tagData);
                     firebase.initEventHandlers();
@@ -35,11 +42,22 @@ var app = {
                     pieChart.initialize(960, 450, tagsArray, tagData);
                 }
 
+                // Draw the expenses by day of week
+                var weekData = utils.formatFBDataByDay(expenses);
+                if (!weekChart.initialized) {
+                    weekChart.initialize(weekData);
+                }
+
                 // Build the expense table and tag info collection
                 expenseTable.build(expenses);
                 tagCollection.build(tags, tagData);
             });
         });
+    },
+
+    updateTotal: function(expenses) {
+        this.currentTotal += utils.calculateTotal(expenses);
+        ui.setTotal();
     }
 };
 
@@ -56,6 +74,7 @@ var firebase = {
                 data = snapshot.val();
                 data = utils.formatFBDataByTag(data);
                 pieChart.update(data);
+                app.updateTotal(data);
             });
     },
 
@@ -109,7 +128,7 @@ var handlers = {
 
         $('#months').delegate('li', 'click', function() {
             var month = $(this).find('a').html();
-            app.setMonth(utils.months[month]);
+            app.setMonth(utils.months.indexOf(month));
         });
     },
 
@@ -132,38 +151,41 @@ var ui = {
     },
 
     setDates: function() {
-        months = $('#months').children();
-        monthIndex = utils.getCurrentMonthInt();
-        monthNowElem = months[monthIndex];
+        var months = $('#months').children();
+        var monthIndex = utils.getCurrentMonthInt();
+        var monthNowElem = months[monthIndex];
         $(monthNowElem.children[0]).addClass('active');
 
         for (var i = monthIndex + 1; i < 12; i++) {
-            monthElem = months[i];
+            var monthElem = months[i];
             $(monthElem).addClass('disabled');
         }
     },
 
+    setTotal: function() {
+        $('#table-total').html(app.currentTotal);
+    }
 }
 
 var utils = {
-    months: {
-        "Jan": 0,
-        "Feb": 1,
-        "Mar": 2,
-        "Apr": 3,
-        "May": 4,
-        "Jun": 5,
-        "Jul": 6,
-        "Aug": 7,
-        "Sep": 8,
-        "Oct": 9,
-        "Nov": 10,
-        "Dec": 11
-    },
+    months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+
+    days: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
 
     getCurrentMonthInt: function() {
         d = new Date();
         return d.getMonth()
+    },
+
+    calculateTotal: function(expenses) {
+        var total = 0;
+        for (var expenseId in expenses) {
+            if (expenses.hasOwnProperty(expenseId)) {
+                var expenseObj = expenses[expenseId];
+                total += expenseObj.amount;
+            }
+        }
+        return total / 100;
     },
 
     tagJsonToArray: function(tagsObj) {
@@ -206,13 +228,53 @@ var utils = {
         return data;
     },
 
-    prettyDate: function(epoch) {
-        var days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+    formatFBDataByDay: function(expenses) {
+        var dataByTag = {};
+        for (var expenseId in expenses) {
+            if (expenses.hasOwnProperty(expenseId)) {
+                var expenseObj = expenses[expenseId];
+                var tagName = expenseObj.tag;
+                if (!dataByTag.hasOwnProperty(tagName)) {
+                    dataByTag[tagName] = {}
+                    dataByTag[tagName].purchases = [];
 
+                }
+                var purchase = [];
+                var day = this.getDayByEpoch(expenseObj["purchase_date"]);
+                purchase.push(day);
+                purchase.push(expenseObj.amount / 100);
+                dataByTag[tagName].purchases.push(purchase);
+            }
+        }
+
+        // now format it all as a giant array
+        var data = [];
+        for (var tagName in dataByTag) {
+            if (dataByTag.hasOwnProperty(tagName)) {
+                var dataItem = {};
+                var tag = dataByTag[tagName];
+                dataItem.tagName = tagName;
+                dataItem.purchases = tag.purchases;
+                dataItem.total = tag.purchases.length;
+                data.push(dataItem);
+            }
+        }
+        return data;
+    },
+
+    getDayByEpoch: function(epoch) {
+        epoch = parseInt(epoch) * 1000;
+        var date = new Date(epoch);
+        date.setTime(date.getTime() + date.getTimezoneOffset());
+        //return this.days[date.getDay()];
+        return date.getDay();
+    },
+
+    prettyDate: function(epoch) {
         epoch = parseInt(epoch) * 1000;
         date = new Date(epoch);
         dateStr = '';
-        dateStr += days[date.getDay()] + ", ";
+        dateStr += this.days[date.getDay()] + ", ";
         dateStr += date.toLocaleDateString() + " " + date.toLocaleTimeString()
         return dateStr;
     }

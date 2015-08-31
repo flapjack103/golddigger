@@ -21,13 +21,54 @@ polyline {
     fill: none;
 }
 
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #b6b6b6;
+    shape-rendering: crispEdges;
+}
+
+
+/*.tick line{fill:none;stroke:none;}*/
+
+.tick text {
+    fill: #999;
+}
+
+g.tag.active {
+    cursor: pointer;
+}
+
+
+/*text.label {
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+text.value {
+    font-size: 12px;
+    font-weight: bold;
+}*/
+
+#week-chart {
+    margin-bottom: 50px
+}
+
 #expenses {
     display: none;
 }
 
 #pie-chart {
-    height: 1000px;
-    margin-left: -120px;
+    height: 475px;
+}
+
+#tag-collection {
+    /*width: 330px;*/
+}
+
+#tag-collection .collection-item.avatar {
+    min-height: 60px
 }
 
 #logo {
@@ -50,15 +91,4 @@ polyline {
 
 .tabs .indicator {
     background-color: #b3e5fc !important;
-}
-
-.collection {
-    width: 330px;
-    position: absolute;
-    top: 145px;
-    right: 85px;
-}
-
-.collection .collection-item.avatar {
-    min-height: 60px
 }

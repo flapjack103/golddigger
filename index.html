@@ -43,27 +43,42 @@
         </div>
     </div>
     <div id="charts">
-        <!-- Pie Chart -->
-        <div id="pie-chart">
+        <div class="row">
+            <div class="col s3">
+                <!-- Tag List -->
+                <ul id="tag-collection" class="collection"></ul>
+            </div>
+            <div class="col s6 offset-s3">
+                <!-- Day of the Week Chart -->
+                <div id="week-chart"></div>
+            </div>
+            <div class="col s9">
+                <!-- Pie Chart -->
+                <div id="pie-chart"></div>
+            </div>
         </div>
-        <ul id="tag-collection" class="collection"></ul>
     </div>
     <div id="expenses">
-        <!-- Expense Table -->
-        <div id="expense-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th data-field="amount">Amount</th>
-                        <th data-field="description">Description</th>
-                        <th date-field="tag">Tag</th>
-                        <th data-field="date">Date</th>
-                        <th data-field="buyer">Buyer</th>
-                    </tr>
-                </thead>
-                <tbody id="expense-table-body">
-                </tbody>
-            </table>
+        <div class="container" <!-- Expense Table -->
+            <div id="expense-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-field="amount">Amount</th>
+                            <th data-field="description">Description</th>
+                            <th date-field="tag">Tag</th>
+                            <th data-field="date">Date</th>
+                            <th data-field="buyer">Buyer</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expense-table-body">
+                    </tbody>
+                </table>
+                <div class="divider"></div>
+                <div>
+                    $<span id="table-total"></span>
+                </div>
+            </div>
         </div>
     </div>
     <!-- 3rd Party JS Libraries -->
@@ -75,6 +90,7 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <!-- Custom JS -->
     <script type="text/javascript" src="js/piechart.js"></script>
+    <script type="text/javascript" src="js/weekchart.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 
