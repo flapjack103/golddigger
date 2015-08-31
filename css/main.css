@@ -1,0 +1,64 @@
+body {
+    /* Better Font Rendering */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+}
+
+path.slice {
+    stroke-width: 2px;
+}
+
+polyline {
+    opacity: .3;
+    stroke: black;
+    stroke-width: 2px;
+    fill: none;
+}
+
+#expenses {
+    display: none;
+}
+
+#pie-chart {
+    height: 1000px;
+    margin-left: -120px;
+}
+
+#logo {
+    color: #33ccaa;
+}
+
+#logo > i {
+    float: right;
+    /*margin-left: 165px;*/
+    color: white;
+}
+
+.tabs .tab a {
+    color: #039be5 !important;
+}
+
+.tabs .tab.disabled a {
+    color: #b3e5fc !important;
+}
+
+.tabs .indicator {
+    background-color: #b3e5fc !important;
+}
+
+.collection {
+    width: 330px;
+    position: absolute;
+    top: 145px;
+    right: 85px;
+}
+
+.collection .collection-item.avatar {
+    min-height: 60px
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <!-- 3rd Party CSS Libraries -->
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <title>Golddigger</title>
+</head>
+
+<body>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper blue-grey darken-4">
+                <a id="logo" href="#" class="brand-logo">GoldDigger <i class="material-icons">credit_card</i></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a id="goto-charts" href="#">Charts</a></li>
+                    <li><a id="goto-expenses" href="#">Expense List</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <ul id="months" class="tabs">
+                <li class="tab col s3"><a href="#">Jan</a></li>
+                <li class="tab col s3"><a href="#">Feb</a></li>
+                <li class="tab col s3"><a href="#">Mar</a></li>
+                <li class="tab col s3"><a href="#">Apr</a></li>
+                <li class="tab col s3"><a href="#">May</a></li>
+                <li class="tab col s3"><a href="#">Jun</a></li>
+                <li class="tab col s3"><a href="#">Jul</a></li>
+                <li class="tab col s3"><a href="#">Aug</a></li>
+                <li class="tab col s3"><a href="#">Sep</a></li>
+                <li class="tab col s3"><a href="#">Oct</a></li>
+                <li class="tab col s3"><a href="#">Nov</a></li>
+                <li class="tab col s3"><a href="#">Dec</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="charts">
+        <!-- Pie Chart -->
+        <div id="pie-chart">
+        </div>
+        <ul id="tag-collection" class="collection"></ul>
+    </div>
+    <div id="expenses">
+        <!-- Expense Table -->
+        <div id="expense-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-field="amount">Amount</th>
+                        <th data-field="description">Description</th>
+                        <th date-field="tag">Tag</th>
+                        <th data-field="date">Date</th>
+                        <th data-field="buyer">Buyer</th>
+                    </tr>
+                </thead>
+                <tbody id="expense-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 3rd Party JS Libraries -->
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script type="text/javascript" src="lib/handlebars-v3.0.3.js"></script>
+    <script type="text/javascript" src="lib/materialize.min.js"></script>
+    <script type="text/javascript" src="lib/firebase.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <!-- Custom JS -->
+    <script type="text/javascript" src="js/piechart.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>
