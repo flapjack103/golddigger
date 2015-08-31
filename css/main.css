@@ -61,6 +61,7 @@ text.value {
 
 #pie-chart {
     height: 475px;
+    min-width: 800px
 }
 
 #tag-collection {
