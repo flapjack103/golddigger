@@ -83,7 +83,7 @@ var weekChart = {
             text
                 .attr("y", j * 20 + 25)
                 .attr("x", function(d, i) {
-                    return xScale(d[0]) - 5;
+                    return xScale(d[0]);
                 })
                 .attr("class", "value")
                 .text(function(d) {

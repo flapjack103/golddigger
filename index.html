@@ -46,7 +46,8 @@
         <div class="row">
             <div class="col s3">
                 <!-- Tag List -->
-                <ul id="tag-collection" class="collection"></ul>
+                <ul id="tag-collection" class="collapsible" data-collapsible="accordion">
+                </ul>
             </div>
             <div class="col s6 offset-s3">
                 <!-- Day of the Week Chart -->
@@ -76,7 +77,7 @@
                 </table>
                 <div class="divider"></div>
                 <div>
-                    $<span id="table-total"></span>
+                    <span id="table-total"></span>
                 </div>
             </div>
         </div>
@@ -89,6 +90,8 @@
     <script type="text/javascript" src="lib/firebase.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <!-- Custom JS -->
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/firebase.js"></script>
     <script type="text/javascript" src="js/piechart.js"></script>
     <script type="text/javascript" src="js/weekchart.js"></script>
     <script type="text/javascript" src="js/main.js"></script>

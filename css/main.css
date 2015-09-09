@@ -93,3 +93,22 @@ text.value {
 .tabs .indicator {
     background-color: #b3e5fc !important;
 }
+
+
+/*.tag-circle {
+    width: 42px;
+    height: 42px;
+    overflow: hidden;
+    left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+    line-height: 42px;
+    color: #fff;
+    background-color: #999;
+    text-align: center;
+}*/
+
+td > i {
+    float: left;
+}
